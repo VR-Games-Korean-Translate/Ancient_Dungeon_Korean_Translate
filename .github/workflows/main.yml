@@ -73,41 +73,34 @@ jobs:
         name: neodgm-artifact
         path: ${{ secrets.VERSION_FILE_PATH }}/neodgm
 
+    - name: Set version
+      run: echo "VERSION=$(date '+%Y%m%d%H%M')" >> $GITHUB_ENV
+
     - name: Create release
+      id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ secrets.VERSION_FILE_PATH }}
-        release_name: Release v${{ secrets.VERSION_FILE_PATH }}
-        body: |
-          Release v${{ secrets.VERSION_FILE_PATH }}
+        tag_name: v${{ env.VERSION }}
+        release_name: Release ${VERSION}
         draft: false
         prerelease: false
 
-    - name: Upload dossammul artifact to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: Compress and upload dossammul directory to release
+      uses: actions/upload-artifact@v2
       with:
-        asset_path: ${{ github.workspace }}/dossammul-artifact.zip
-        asset_name: dossammul-artifact.zip
-        asset_content_type: application/zip
+        name: dossammul-artifact-${{ env.VERSION }}
+        path: ${{ secrets.VERSION_FILE_PATH }}/dossammul
 
-    - name: Upload galmuri9 artifact to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: Compress and upload galmuri9 directory to release
+      uses: actions/upload-artifact@v2
       with:
-        asset_path: ${{ github.workspace }}/galmuri9-artifact.zip
-        asset_name: galmuri9-artifact.zip
-        asset_content_type: application/zip
+        name: galmuri9-artifact-${{ env.VERSION }}
+        path: ${{ secrets.VERSION_FILE_PATH }}/galmuri9
 
-    - name: Upload neodgm artifact to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: Compress and upload neodgm directory to release
+      uses: actions/upload-artifact@v2
       with:
-        asset_path: ${{ github.workspace }}/neodgm-artifact.zip
-        asset_name: neodgm-artifact.zip
-        asset_content_type: application/zip
+        name: neodgm-artifact-${{ env.VERSION }}
+        path: ${{ secrets.VERSION_FILE_PATH }}/neodgm
