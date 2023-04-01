@@ -34,6 +34,7 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.WORKFLOW_TOKEN }}@github.com/VR-Games-Korean-Translate/Ancient_Dungeon_Korean_Translate.git
 
     - name: Commit and push changes
       run: |
