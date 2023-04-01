@@ -60,7 +60,7 @@ credits_narrative;<color=#e62>Narrative Design</color><br>Christopher Walton
 credits_programming;<color=#e62>Programming</color><br>Thom de Meulder
 credits_thanks;ADVR 디스코드 관리자, 테스터 및 도움을 주신 모든 분들께 감사드립니다!
 credits_kickstarter;이 게임을 가능하게 해준 모든 킥스타터 서포터들에게 감사드립니다!
-thank_you_for_playing;고대 던전을 플레이해 주셔서 감사합니다!<br><br>게임에 대한 제안이 있거나 피드백을 제공하고 싶다면 언제든지 디스코드에 동참하십시오.<br><br><color=orange>https://discord.gg/advr</color><br><br>변경로그를 확인하여 미쳐 알아보지 못한 패치를 찾아보세요.<br><br>한글화를 진행하며 Neo둥근모를 사용하였습니다.<br>Copyright © 2017-2022, Eunbin Jeong (Dalgona.) <project-neodgm@dalgona.dev> with reserved font name "Neo둥근모" and "NeoDunggeunmo".
+thank_you_for_playing;고대 던전을 플레이해 주셔서 감사합니다!<br><br>게임에 대한 제안이 있거나 피드백을 제공하고 싶다면 언제든지 디스코드에 동참하십시오.<br><br><color=orange>https://discord.gg/advr</color><br><br>변경로그를 확인하여 미쳐 알아보지 못한 패치를 찾아보세요.<br><br><KOREAN_FONT_LICENSE>
 how_to_play_title;플레이 하는 법
 how_to_play_equip_sword;검 장착 / 해제
 how_to_play_equip_knife;투척용 나이프 장착 / 상호작용
@@ -949,7 +949,7 @@ lore_id_2012_text;그냥 몇 주 동안 하루 종일 쳐다보며 낙서만 하
 lore_id_2014_title;Page 3
 lore_id_2014_text;한밤중, 부자는 깊이 잠들었다. 일지를 쓰면 안 될 것 같지만(어리석은 사람들은 글을 쓸 수 없으니), 누군가에게, 내 자신에게라도 자랑하고 싶어서 글을 쓰게 됐다.<br><br>나는 무대 체질인가 보다. 내가 대단한 배우라고 생각해 본 적은 없지만 누군가 내 모습을 보면 절대적으로 바보라고 생각할 것이다.<br><br>부자는 여전히 그의 비밀을 지키고 있지만, 나는 그가 느슨해지는 것을 볼 수 있다. 값싼 돈주머니 끈처럼 말이지. 이젠 시간 문제일 뿐이다...
 lore_id_2016_title;Page 4
-lore_id_2016_text;
+lore_id_2016_text;이 곳은 돌과 난로가 모서리마다 있다! 누구는 이토록 부유하고 다른 사람은 얼마나 가난한지 믿을 수 없을 만큼 차이가 크다.<br><br>그래도 상관없다, 난 여기서 아늑하게 지내고 있으니. 부자는 나를 바보로 생각하고, 나만이 그의 연구실로 내려가 차와 비스킬을 대접하게 해준다. 내가 보고 있는 것들에 대해 아무것도 모른다고 생각하지만, 사실은 그렇지 않다. 내가 기억할 수 있는 모든 것을 기록해놓았고, 내가 스스로 어떤 마법을 만들어볼 수 있을지 알아보고 있다!
 boss_Deranged Adventurer;정신 나간 모험가
 boss_Rabid Bestiary;광포한 야수도감
 boss_DoomShroom;죽음의 버섯
