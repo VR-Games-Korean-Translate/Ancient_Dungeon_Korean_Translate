@@ -49,21 +49,26 @@ def get_translate_data(sheet):
 
 def make_translate_file(translate_data_list):
     # 경로 설정 및 "english.csv" 파일에 저장
-    base_directory = os.environ.get("VERSION_FILE_PATH", "")
-    subdirectories = license.keys()
+base_directory = os.environ.get("VERSION_FILE_PATH", "")
+subdirectories = license.keys()
 
-    for subdir in subdirectories:
-        target_directory = os.path.join(base_directory, subdir, "StreamingAssets", "gamedata", "language")
-        if not os.path.exists(target_directory):
-            os.makedirs(target_directory)
+for subdir in subdirectories:
+    target_directory = os.path.join(base_directory, subdir, "StreamingAssets", "gamedata", "language")
+    if not os.path.exists(target_directory):
+        os.makedirs(target_directory)
 
-        file_path = os.path.join(target_directory, "english.csv")
+    file_path = os.path.join(target_directory, "english.csv")
 
-        with open(file_path, "w", encoding="utf-8") as file:
-            for translate_row in translate_data_list:
-                # <KOREAN_FONT_LICENSE> 텍스트를 찾아 해당 키의 값으로 대체
-                if "<KOREAN_FONT_LICENSE>" in translate_row:
-                    translate_row = translate_row.replace("<KOREAN_FONT_LICENSE>", license[subdir])
+    with open(file_path, "w", encoding="utf-8") as file:
+        for index, translate_row in enumerate(translate_data_list):
+            # <KOREAN_FONT_LICENSE> 텍스트를 찾아 해당 키의 값으로 대체
+            if "<KOREAN_FONT_LICENSE>" in translate_row:
+                translate_row = translate_row.replace("<KOREAN_FONT_LICENSE>", license[subdir])
+            
+            # 인덱스가 마지막 요소인지 확인
+            if index == len(translate_data_list) - 1:
+                file.write(f"{translate_row}")
+            else:
                 file.write(f"{translate_row}\n")
 
 
