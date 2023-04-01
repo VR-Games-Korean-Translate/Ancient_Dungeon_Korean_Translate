@@ -37,10 +37,17 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         
-    - name: Commit and push changes
+    - name: Check for changes
       run: |
-        git add -A
-        git commit -m "Update english.csv"
+        git status --porcelain | grep "^M"
+        git diff --name-only HEAD HEAD~1
+
+    - name: Commit changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Update english.csv" || echo "No changes to commit"
         git push
         
     - name: Create releases directory
