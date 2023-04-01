@@ -59,23 +59,23 @@ jobs:
 
     - name: Create dos_sammul release directory
       run: mkdir -p releases/dossammul
-    
+
     - name: Create dos_sammul release
-      run: zip -r dos_sammul.zip . -i dossammul/\*
+      run: zip -r dos_sammul.zip . -i e_1_3_6/dossammul/\*
       working-directory: releases
-      
+
     - name: Create galmuri9 release directory
       run: mkdir -p releases/galmuri9
-    
+
     - name: Create galmuri9 release
-      run: zip -r galmuri9.zip . -i galmuri9/\*
+      run: zip -r galmuri9.zip . -i e_1_3_6/galmuri9/\*
       working-directory: releases
-      
+
     - name: Create neodgm release directory
       run: mkdir -p releases/neodgm
-    
+
     - name: Create neodgm release
-      run: zip -r neodgm.zip . -i neodgm/\*
+      run: zip -r neodgm.zip . -i e_1_3_6/neodgm/\*
       working-directory: releases
 
     - name: Create release on GitHub
