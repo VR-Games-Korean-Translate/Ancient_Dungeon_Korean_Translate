@@ -63,14 +63,20 @@ jobs:
     - name: Create dos_sammul release
       run: zip -r dos_sammul.zip . -i dossammul/\*
       working-directory: releases
-
+      
+    - name: Create galmuri9 release directory
+      run: mkdir -p releases/galmuri9
+    
     - name: Create galmuri9 release
-      run: zip -r galmuri9.zip "${{ secrets.VERSION_FILE_PATH }}/galmuri9"
-      working-directory: releases/
-
+      run: zip -r galmuri9.zip . -i galmuri9/\*
+      working-directory: releases
+      
+    - name: Create neodgm release directory
+      run: mkdir -p releases/neodgm
+    
     - name: Create neodgm release
-      run: zip -r neodgm.zip "${{ secrets.VERSION_FILE_PATH }}/neodgm"
-      working-directory: releases/
+      run: zip -r neodgm.zip . -i neodgm/\*
+      working-directory: releases
 
     - name: Create release on GitHub
       uses: softprops/action-gh-release@v1
