@@ -32,22 +32,26 @@ jobs:
         SHEET_URL: ${{ secrets.SHEET_URL }}
         VERSION_FILE_PATH: ${{ secrets.VERSION_FILE_PATH }}
 
-    - name: Configure Git
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        
     - name: Check for changes
+      id: git-check
       run: |
-        git status --porcelain | grep "^M"
-        git diff --name-only HEAD HEAD~1
+        if git status --porcelain | grep "^M" &> /dev/null; then
+          echo "::set-output name=changes::true"
+        else
+          echo "::set-output name=changes::false"
+        fi
 
-    - name: Commit changes
+    - name: Configure Git
+      if: steps.git-check.outputs.changes == 'true'
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
+
+    - name: Commit and push changes
+      if: steps.git-check.outputs.changes == 'true'
+      run: |
         git add .
-        git commit -m "Update english.csv" || echo "No changes to commit"
+        git commit -m "Update english.csv"
         git push
         
     - name: Create releases directory
