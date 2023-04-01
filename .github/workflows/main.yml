@@ -56,7 +56,7 @@ jobs:
         
     - name: Set Version Number
       run: |
-        version=$(<${{ secrets.VERSION_FILE_PATH }})
+        version=$(cat "${{ secrets.VERSION_FILE_PATH }}")
         echo "::set-output name=version::$version"
       id: version
       shell: bash
