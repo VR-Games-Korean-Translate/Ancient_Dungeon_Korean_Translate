@@ -1,10 +1,16 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
+import json
 
 def get_data():
-    # 서비스 계정 키 파일 경로 설정
-    key_file_path = os.environ.get("KEY_FILE_PATH")
+    # 서비스 계정 키 가져오기
+    service_account_key = os.environ.get("SERVICE_ACCOUNT_KEY")
+    key_file_path = "key.json"
+
+    # 키를 JSON 형태로 변환하여 임시 파일에 저장
+    with open(key_file_path, "w") as key_file:
+        key_file.write(service_account_key)
 
     # Google API 인증 및 클라이언트 생성
     scopes = [
@@ -31,5 +37,8 @@ def get_data():
     with open(file_path, "w", encoding="utf-8") as file:
         for formatted_row in formatted_rows:
             file.write(f"{formatted_row}\n")
+
+    # 임시 키 파일 제거
+    os.remove(key_file_path)
 
 get_data()
