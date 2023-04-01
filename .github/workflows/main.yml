@@ -57,9 +57,12 @@ jobs:
     - name: Create releases directory
       run: mkdir releases
 
+    - name: Create dos_sammul release directory
+      run: mkdir -p releases/dossammul
+    
     - name: Create dos_sammul release
-      run: zip -r dos_sammul.zip "${{ secrets.VERSION_FILE_PATH }}/dossammul"
-      working-directory: releases/
+      run: zip -r dos_sammul.zip . -i dossammul/\*
+      working-directory: releases
 
     - name: Create galmuri9 release
       run: zip -r galmuri9.zip "${{ secrets.VERSION_FILE_PATH }}/galmuri9"
