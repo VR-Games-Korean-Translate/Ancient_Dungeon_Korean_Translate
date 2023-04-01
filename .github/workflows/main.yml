@@ -22,6 +22,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        sudo apt-get install zip
         python -m pip install --upgrade pip
         pip install gspread oauth2client
 
@@ -68,30 +69,15 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Compress and upload dossammul directory to release
-      uses: actions/upload-artifact@v2
-      with:
-        name: dossammul-artifact-${{ env.VERSION }}
-        path: ${{ secrets.VERSION_FILE_PATH }}/dossammul
+    - name: Compress dossammul directory
+      run: zip -r dossammul-artifact-${{ env.VERSION }}.zip ${{ secrets.VERSION_FILE_PATH }}/dossammul
 
-    - name: Compress and upload galmuri9 directory to release
-      uses: actions/upload-artifact@v2
-      with:
-        name: galmuri9-artifact-${{ env.VERSION }}
-        path: ${{ secrets.VERSION_FILE_PATH }}/galmuri9
+    - name: Compress galmuri9 directory
+      run: zip -r galmuri9-artifact-${{ env.VERSION }}.zip ${{ secrets.VERSION_FILE_PATH }}/galmuri9
 
-    - name: Compress and upload neodgm directory to release
-      uses: actions/upload-artifact@v2
-      with:
-        name: neodgm-artifact-${{ env.VERSION }}
-        path: ${{ secrets.VERSION_FILE_PATH }}/neodgm
+    - name: Compress neodgm directory
+      run: zip -r neodgm-artifact-${{ env.VERSION }}.zip ${{ secrets.VERSION_FILE_PATH }}/neodgm
 
-    - name: Compress and upload dossammul directory to release
-      uses: actions/upload-artifact@v2
-      with:
-        name: dossammul-artifact-${{ env.VERSION }}
-        path: ${{ github.workspace }}/dossammul-artifact-${{ env.VERSION }}.zip
-    
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
       with:
@@ -106,8 +92,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/galmuri9-artifact.zip
-        asset_name: galmuri9-artifact.zip
+        asset_path: ${{ github.workspace }}/galmuri9-artifact-${{ env.VERSION }}.zip
+        asset_name: galmuri9-artifact-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
@@ -116,8 +102,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/neodgm-artifact.zip
-        asset_name: neodgm-artifact.zip
+        asset_path: ${{ github.workspace }}/neodgm-artifact-${{ env.VERSION }}.zip
+        asset_name: neodgm-artifact-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
