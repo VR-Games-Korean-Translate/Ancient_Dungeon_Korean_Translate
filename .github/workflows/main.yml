@@ -26,7 +26,7 @@ jobs:
     - name: Fetch and save data
       run: python fetch_data.py
       env:
-        KEY_FILE_PATH: ${{ secrets.KEY_FILE_PATH }}
+        SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
         SHEET_URL: ${{ secrets.SHEET_URL }}
         FILE_PATH: ${{ secrets.FILE_PATH }}
 
