@@ -65,18 +65,24 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       with:
         tag_name: v${{ env.VERSION }}
-        release_name: Release ${VERSION}
+        release_name: ${{ secrets.VERSION_FILE_PATH }}_v${{ env.VERSION }}
         draft: false
         prerelease: false
 
     - name: Compress dossammul directory
-      run: zip -r dossammul-artifact-${{ env.VERSION }}.zip ${{ secrets.VERSION_FILE_PATH }}/dossammul
+      run: |
+        cd ${{ secrets.VERSION_FILE_PATH }}/dossammul
+        zip -r ../../dossammul-artifact-${{ env.VERSION }}.zip .
 
     - name: Compress galmuri9 directory
-      run: zip -r galmuri9-artifact-${{ env.VERSION }}.zip ${{ secrets.VERSION_FILE_PATH }}/galmuri9
+      run: |
+        cd ${{ secrets.VERSION_FILE_PATH }}/galmuri9
+        zip -r ../../galmuri9-artifact-${{ env.VERSION }}.zip .
 
     - name: Compress neodgm directory
-      run: zip -r neodgm-artifact-${{ env.VERSION }}.zip ${{ secrets.VERSION_FILE_PATH }}/neodgm
+      run: |
+        cd ${{ secrets.VERSION_FILE_PATH }}/neodgm
+        zip -r ../../neodgm-artifact-${{ env.VERSION }}.zip .
 
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
