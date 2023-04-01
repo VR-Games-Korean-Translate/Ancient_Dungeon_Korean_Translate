@@ -55,35 +55,42 @@ jobs:
         git push
         
     - name: Set Version Number
-      run: echo "::set-env name=VERSION::$(<${{ secrets.VERSION_FILE_PATH }})"
+      run: |
+        version=$(<${{ secrets.VERSION_FILE_PATH }})
+        echo "::set-output name=version::$version"
+      id: version
+      shell: bash
+      env:
+        pythonLocation: /opt/hostedtoolcache/Python/3.8.16/x64
+        LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.16/x64/lib
 
     - name: Compress and upload dossammul directory to release
       uses: actions/upload-artifact@v2
       with:
         name: dossammul-artifact
-        path: e_${{ env.VERSION }}/dossammul
+        path: e_${{ env.version }}/dossammul
 
     - name: Compress and upload galmuri9 directory to release
       uses: actions/upload-artifact@v2
       with:
         name: galmuri9-artifact
-        path: e_${{ env.VERSION }}/galmuri9
+        path: e_${{ env.version }}/galmuri9
 
     - name: Compress and upload neodgm directory to release
       uses: actions/upload-artifact@v2
       with:
         name: neodgm-artifact
-        path: e_${{ env.VERSION }}/neodgm
+        path: e_${{ env.version }}/neodgm
 
     - name: Create release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ env.VERSION }}
-        release_name: Release v${{ env.VERSION }}
+        tag_name: v${{ env.version }}
+        release_name: Release v${{ env.version }}
         body: |
-          Release v${{ env.VERSION }}
+          Release v${{ env.version }}
         draft: false
         prerelease: false
 
