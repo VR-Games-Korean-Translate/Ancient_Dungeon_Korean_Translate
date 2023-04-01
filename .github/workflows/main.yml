@@ -58,17 +58,15 @@ jobs:
       run: mkdir releases
 
     - name: Create dos_sammul release
-      run: zip -r dos_sammul.zip ${{ secrets.VERSION_FILE_PATH }}/dossammul .
+      run: zip -r dos_sammul.zip ${{ secrets.VERSION_FILE_PATH }}/dossammul
       working-directory: releases/
-      env:
-        VERSION_FILE_PATH: ${{ secrets.VERSION_FILE_PATH }}
       
     - name: Create galmuri9 release
-      run: zip -r galmuri9.zip ${{ secrets.VERSION_FILE_PATH }}/galmuri9 .
+      run: zip -r galmuri9.zip ${{ secrets.VERSION_FILE_PATH }}/galmuri9
       working-directory: releases/
       
     - name: Create neodgm release
-      run: zip -r neodgm.zip ${{ secrets.VERSION_FILE_PATH }}/neodgm .
+      run: zip -r neodgm.zip ${{ secrets.VERSION_FILE_PATH }}/neodgm
       working-directory: releases/
 
     - name: Create release on GitHub
