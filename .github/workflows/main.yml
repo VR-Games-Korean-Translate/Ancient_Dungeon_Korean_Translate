@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.WORKFLOW_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -34,12 +36,9 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.WORKFLOW_TOKEN }}@github.com/VR-Games-Korean-Translate/Ancient_Dungeon_Korean_Translate.git
 
     - name: Commit and push changes
       run: |
         git add .
         git commit -m "Update english.csv"
         git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
