@@ -25,6 +25,7 @@
 ## 사용법
 
 * [Release](https://github.com/VR-Games-Korean-Translate/Ancient_Dungeon_Korean_Translate/releases) 페이지에서 최신 파일을 다운로드 하세요.
+  * galmuri9, dossammul, neodgm 압축파일중 하나를 선택하여 다운로드 받으시면 됩니다.
 * 에이션트 던전 VR이 설치된 경로에 data 폴더에 덮어 씌우세요.
   * Rift버전의 경로는 일반적으로 다음과 같습니다. (C:\Program Files\Oculus\Software\Software\erthu-ancient-dungeon-vr\Ancient_Dungeon_Data)
   * 검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요.
@@ -63,6 +64,7 @@ The current compatible version is e1.3.6.
 ## How to Use
 
 * Download the latest file from the [Release](https://github.com/VR-Games-Korean-Translate/Ancient_Dungeon_Korean_Translate/releases) page.
+  * Choose one of the following archives to download: galmuri9, dossammul, neodgm.
 * Overwrite the data folder in the installation path of Ancient Dungeon VR.
   * The typical path for the Rift version is as follows: (C:\Program Files\Oculus\Software\Software\erthu-ancient-dungeon-vr\Ancient_Dungeon_Data)
   * If you encounter a black screen error, please overwrite the files with [this file](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing).
