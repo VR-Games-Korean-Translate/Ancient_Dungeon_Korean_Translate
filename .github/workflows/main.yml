@@ -62,9 +62,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          dos_sammul.zip
-          galmuri9.zip
-          neodgm.zip
+          releases/dos_sammul.zip
+          releases/galmuri9.zip
+          releases/neodgm.zip
         token: ${{ secrets.WORKFLOW_TOKEN }}
         tag_name: v1.0
         title: Translation files for v1.0
