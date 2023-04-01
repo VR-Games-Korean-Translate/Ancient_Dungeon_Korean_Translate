@@ -30,10 +30,13 @@ jobs:
         SHEET_URL: ${{ secrets.SHEET_URL }}
         VERSION_FILE_PATH: ${{ secrets.VERSION_FILE_PATH }}
 
-    - name: Commit and push changes
+    - name: Commit and push
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git add ${{ secrets.VERSION_FILE_PATH }}
-        git commit -m "Update english.csv" || true
+        git remote set-url origin https://${GH_PAT}@github.com/VR-Games-Korean-Translate/Ancient_Dungeon_Korean_Translate.git
+        git add .
+        git commit -m "Update english.csv"
         git push
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
