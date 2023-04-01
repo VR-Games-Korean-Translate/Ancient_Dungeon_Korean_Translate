@@ -34,6 +34,12 @@ def get_data():
 
     # 경로 설정 및 "english.csv" 파일에 저장
     file_path = os.environ.get("FILE_PATH", "english.csv")
+
+    # 지정된 경로가 없으면 생성
+    file_directory = os.path.dirname(file_path)
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+
     with open(file_path, "w", encoding="utf-8") as file:
         for formatted_row in formatted_rows:
             file.write(f"{formatted_row}\n")
