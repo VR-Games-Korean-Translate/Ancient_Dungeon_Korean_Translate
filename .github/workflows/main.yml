@@ -39,7 +39,7 @@ jobs:
         
     - name: Commit and push changes
       run: |
-        git add .
+        git add -
         git commit -m "Update english.csv"
         git push
         
