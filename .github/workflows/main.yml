@@ -54,30 +54,65 @@ jobs:
         git commit -m "Update english.csv"
         git push
         
-    - name: Create releases directory
-      run: mkdir releases
+    - name: Set Version Number
+      run: echo "::set-env name=VERSION::$(<${{ secrets.VERSION_FILE_PATH }})"
 
-    - name: Create dos_sammul release
-      run: zip -r dos_sammul.zip ${{ secrets.VERSION_FILE_PATH }}/dossammul
-      working-directory: releases/
-      
-    - name: Create galmuri9 release
-      run: zip -r galmuri9.zip ${{ secrets.VERSION_FILE_PATH }}/galmuri9
-      working-directory: releases/
-      
-    - name: Create neodgm release
-      run: zip -r neodgm.zip ${{ secrets.VERSION_FILE_PATH }}/neodgm
-      working-directory: releases/
-
-    - name: Create release on GitHub
-      uses: softprops/action-gh-release@v1
+    - name: Compress and upload dossammul directory to release
+      uses: actions/upload-artifact@v2
       with:
-        files: |
-          releases/dos_sammul.zip
-          releases/galmuri9.zip
-          releases/neodgm.zip
-        token: ${{ secrets.WORKFLOW_TOKEN }}
-        tag_name: v1.0
-        title: Translation files for v1.0
+        name: dossammul-artifact
+        path: e_${{ env.VERSION }}/dossammul
+
+    - name: Compress and upload galmuri9 directory to release
+      uses: actions/upload-artifact@v2
+      with:
+        name: galmuri9-artifact
+        path: e_${{ env.VERSION }}/galmuri9
+
+    - name: Compress and upload neodgm directory to release
+      uses: actions/upload-artifact@v2
+      with:
+        name: neodgm-artifact
+        path: e_${{ env.VERSION }}/neodgm
+
+    - name: Create release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ env.VERSION }}
+        release_name: Release v${{ env.VERSION }}
         body: |
-          Translation files for v1.0 release.
+          Release v${{ env.VERSION }}
+        draft: false
+        prerelease: false
+
+    - name: Upload dossammul artifact to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/dossammul-artifact.zip
+        asset_name: dossammul-artifact.zip
+        asset_content_type: application/zip
+
+    - name: Upload galmuri9 artifact to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/galmuri9-artifact.zip
+        asset_name: galmuri9-artifact.zip
+        asset_content_type: application/zip
+
+    - name: Upload neodgm artifact to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/neodgm-artifact.zip
+        asset_name: neodgm-artifact.zip
+        asset_content_type: application/zip
