@@ -11,3 +11,5 @@ def get_translate_percentage():
 
     cell_value = csv_sheet.acell("J2").value
     print(cell_value)
+
+get_translate_percentage()
