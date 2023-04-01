@@ -58,6 +58,15 @@ jobs:
     - name: Set version
       run: echo "VERSION=$(date '+%Y%m%d%H%M')" >> $GITHUB_ENV
 
+    - name: Fetch release description
+      id: fetch_description
+      run: |
+        DESCRIPTION="번역률: $(python fetch_description.py)"
+        echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
+      env:
+        SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+        SHEET_URL: ${{ secrets.SHEET_URL }}
+        
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
@@ -66,8 +75,10 @@ jobs:
       with:
         tag_name: v${{ env.VERSION }}
         release_name: ${{ secrets.VERSION_FILE_PATH }}_v${{ env.VERSION }}
+        body: ${{ env.DESCRIPTION }}
         draft: false
         prerelease: false
+
 
     - name: Compress dossammul directory
       run: |
