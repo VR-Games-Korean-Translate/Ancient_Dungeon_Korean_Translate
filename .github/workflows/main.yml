@@ -85,7 +85,7 @@ jobs:
     - name: Create release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       with:
         tag_name: v${{ env.version }}
         release_name: Release v${{ env.version }}
@@ -97,7 +97,7 @@ jobs:
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/dossammul-artifact.zip
@@ -107,7 +107,7 @@ jobs:
     - name: Upload galmuri9 artifact to release
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/galmuri9-artifact.zip
@@ -117,7 +117,7 @@ jobs:
     - name: Upload neodgm artifact to release
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/neodgm-artifact.zip
