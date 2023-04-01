@@ -54,43 +54,34 @@ jobs:
         git commit -m "Update english.csv"
         git push
         
-    - name: Set Version Number
-      run: |
-        version=$(cat "${{ secrets.VERSION_FILE_PATH }}")
-        echo "::set-output name=version::$version"
-      id: version
-      shell: bash
-      env:
-        pythonLocation: /opt/hostedtoolcache/Python/3.8.16/x64
-        LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.16/x64/lib
 
     - name: Compress and upload dossammul directory to release
       uses: actions/upload-artifact@v2
       with:
         name: dossammul-artifact
-        path: e_${{ env.version }}/dossammul
+        path: ${{ secrets.VERSION_FILE_PATH }}/dossammul
 
     - name: Compress and upload galmuri9 directory to release
       uses: actions/upload-artifact@v2
       with:
         name: galmuri9-artifact
-        path: e_${{ env.version }}/galmuri9
+        path: ${{ secrets.VERSION_FILE_PATH }}/galmuri9
 
     - name: Compress and upload neodgm directory to release
       uses: actions/upload-artifact@v2
       with:
         name: neodgm-artifact
-        path: e_${{ env.version }}/neodgm
+        path: ${{ secrets.VERSION_FILE_PATH }}/neodgm
 
     - name: Create release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       with:
-        tag_name: v${{ env.version }}
-        release_name: Release v${{ env.version }}
+        tag_name: v${{ secrets.VERSION_FILE_PATH }}
+        release_name: Release v${{ secrets.VERSION_FILE_PATH }}
         body: |
-          Release v${{ env.version }}
+          Release v${{ secrets.VERSION_FILE_PATH }}
         draft: false
         prerelease: false
 
