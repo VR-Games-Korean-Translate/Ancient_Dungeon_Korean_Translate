@@ -28,12 +28,12 @@ jobs:
       env:
         SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
         SHEET_URL: ${{ secrets.SHEET_URL }}
-        FILE_PATH: ${{ secrets.FILE_PATH }}
+        FILE_PATH: ${{ secrets.VERSION_FILE_PATH }}
 
     - name: Commit and push changes
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git add ${{ secrets.FILE_PATH }}
+        git add ${{ secrets.VERSION_FILE_PATH }}
         git commit -m "Update english.csv" || true
         git push
