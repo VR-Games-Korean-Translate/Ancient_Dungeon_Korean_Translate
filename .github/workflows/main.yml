@@ -1,4 +1,4 @@
-name: Daily Korean Translation 
+name: Daily Korean Translation Release
 
 on:
   workflow_dispatch:
@@ -61,7 +61,7 @@ jobs:
     - name: Fetch release description
       id: fetch_description
       run: |
-        DESCRIPTION="번역률: $(python fetch_description.py)%0A%0A원하는 폰트 한가지를 선택해서 사용하세요.%0A%0A검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요."
+        DESCRIPTION="번역률: $(python fetch_description.py)\n\n원하는 폰트 한가지를 선택해서 사용하세요.\n\n검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요."
         echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
       env:
         SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
