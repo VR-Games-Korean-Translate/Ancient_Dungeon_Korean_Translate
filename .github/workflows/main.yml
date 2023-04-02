@@ -108,8 +108,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ env.ENCODED_DOSSAMMUL }}
-        asset_name: 도스샘물-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/도스샘물-${{ env.VERSION }}.zip
+        asset_name: ${{ env.ENCODED_DOSSAMMUL }}
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
@@ -118,8 +118,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ env.ENCODED_GALMURI9 }}
-        asset_name: 갈무리9-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/갈무리9-${{ env.VERSION }}.zip
+        asset_name: ${{ env.ENCODED_GALMURI9 }}
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
@@ -128,8 +128,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ env.ENCODED_NEODGM }}
-        asset_name: Neo둥근모-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/Neo둥근모-${{ env.VERSION }}.zip
+        asset_name: ${{ env.ENCODED_NEODGM }}
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
