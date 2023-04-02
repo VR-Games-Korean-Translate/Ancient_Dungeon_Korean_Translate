@@ -1,3 +1,5 @@
+![Last Successful Run](https://img.shields.io/badge/dynamic/json?color=success&label=Last%20Successful%20Run&query=last_successful_run_date&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyour-username%2Fyour-repo-name%2Fmain%2Flast_success_date.json)
+
 # 에이션트 던전 한글화 프로젝트
 ### 프로젝트 참여자 - 한국 VR 게이머 일동
 
