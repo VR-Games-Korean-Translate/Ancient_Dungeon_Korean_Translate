@@ -97,9 +97,9 @@ jobs:
 
     - name: Encode filenames
       run: |
-        ENCODED_DOSSAMMUL=$(python -c "import urllib.parse; print(urllib.parse.quote('도스샘물-${{ env.VERSION }}.zip'))")
-        ENCODED_GALMURI9=$(python -c "import urllib.parse; print(urllib.parse.quote('갈무리9-${{ env.VERSION }}.zip'))")
-        ENCODED_NEODGM=$(python -c "import urllib.parse; print(urllib.parse.quote('Neo둥근모-${{ env.VERSION }}.zip'))")
+        ENCODED_DOSSAMMUL=$(python -c "import urllib.parse; print(urllib.parse.quote('도스샘물-${{ env.VERSION }}.zip', safe=''))")
+        ENCODED_GALMURI9=$(python -c "import urllib.parse; print(urllib.parse.quote('갈무리9-${{ env.VERSION }}.zip', safe=''))")
+        ENCODED_NEODGM=$(python -c "import urllib.parse; print(urllib.parse.quote('Neo둥근모-${{ env.VERSION }}.zip', safe=''))")
         echo "ENCODED_DOSSAMMUL=$ENCODED_DOSSAMMUL" >> $GITHUB_ENV
         echo "ENCODED_GALMURI9=$ENCODED_GALMURI9" >> $GITHUB_ENV
         echo "ENCODED_NEODGM=$ENCODED_NEODGM" >> $GITHUB_ENV
@@ -133,3 +133,24 @@ jobs:
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+
+    - name: Update last success date
+      if: success()
+      run: |
+        echo "LAST_SUCCESS_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+
+    - name: Commit last success date
+      if: success()
+      run: |
+        echo "Last successful run: $LAST_SUCCESS_DATE" > last_success_date.txt
+        git add last_success_date.txt
+        git commit -m "Update last success date"
+        git push
+
+    - name: Update last success date JSON
+      if: success()
+      run: |
+        echo '{"last_successful_run_date": "'"$LAST_SUCCESS_DATE"'"}' > last_success_date.json
+        git add last_success_date.json
+        git commit -m "Update last success date JSON"
+        git push
