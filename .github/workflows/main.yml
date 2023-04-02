@@ -61,7 +61,7 @@ jobs:
     - name: Fetch release description
       id: fetch_description
       run: |
-        DESCRIPTION="번역률: $(python fetch_description.py)"
+        DESCRIPTION="번역률: $(python fetch_description.py)%0A%0A원하는 폰트 한가지를 선택해서 사용하세요.%0A%0A검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요."
         echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
       env:
         SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
@@ -93,34 +93,43 @@ jobs:
     - name: Compress neodgm directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/neodgm
-        zip -r ../../네오둥근모-${{ env.VERSION }}.zip .
+        zip -r ../../Neo둥근모-${{ env.VERSION }}.zip .
+
+    - name: Encode filenames
+      run: |
+        ENCODED_DOSSAMMUL=$(python -c "import urllib.parse; print(urllib.parse.quote('도스샘물-${{ env.VERSION }}.zip'))")
+        ENCODED_GALMURI9=$(python -c "import urllib.parse; print(urllib.parse.quote('갈무리9-${{ env.VERSION }}.zip'))")
+        ENCODED_NEODGM=$(python -c "import urllib.parse; print(urllib.parse.quote('Neo둥근모-${{ env.VERSION }}.zip'))")
+        echo "ENCODED_DOSSAMMUL=$ENCODED_DOSSAMMUL" >> $GITHUB_ENV
+        echo "ENCODED_GALMURI9=$ENCODED_GALMURI9" >> $GITHUB_ENV
+        echo "ENCODED_NEODGM=$ENCODED_NEODGM" >> $GITHUB_ENV
 
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/도스샘물-${{ env.VERSION }}.zip
-        asset_name: 도스샘물-${{ env.VERSION }}.zip
+        asset_name: ${{ env.ENCODED_DOSSAMMUL }}
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-    
+
     - name: Upload galmuri9 artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/갈무리9-${{ env.VERSION }}.zip
-        asset_name: 갈무리9-${{ env.VERSION }}.zip
+        asset_name: ${{ env.ENCODED_GALMURI9 }}
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-    
+
     - name: Upload neodgm artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/네오둥근모-${{ env.VERSION }}.zip
-        asset_name: 네오둥근모-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/Neo둥근모-${{ env.VERSION }}.zip
+        asset_name: ${{ env.ENCODED_NEODGM }}
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
