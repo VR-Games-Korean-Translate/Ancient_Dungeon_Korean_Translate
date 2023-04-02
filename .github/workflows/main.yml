@@ -3,7 +3,7 @@ name: Fetch Google Sheet Data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # 매일 자정에 실행
+    - cron: '0 15 * * *' # 매일 자정에 실행
 
 jobs:
   fetch_data:
@@ -83,44 +83,44 @@ jobs:
     - name: Compress dossammul directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/dossammul
-        zip -r ../../dossammul-artifact-${{ env.VERSION }}.zip .
+        zip -r ../../도스샘물-${{ env.VERSION }}.zip .
 
     - name: Compress galmuri9 directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/galmuri9
-        zip -r ../../galmuri9-artifact-${{ env.VERSION }}.zip .
+        zip -r ../../갈무리9-${{ env.VERSION }}.zip .
 
     - name: Compress neodgm directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/neodgm
-        zip -r ../../neodgm-artifact-${{ env.VERSION }}.zip .
+        zip -r ../../네오둥근모-${{ env.VERSION }}.zip .
 
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/dossammul-artifact-${{ env.VERSION }}.zip
-        asset_name: dossammul-artifact-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/도스샘물-${{ env.VERSION }}.zip
+        asset_name: 도스샘물-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-
+    
     - name: Upload galmuri9 artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/galmuri9-artifact-${{ env.VERSION }}.zip
-        asset_name: galmuri9-artifact-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/갈무리9-${{ env.VERSION }}.zip
+        asset_name: 갈무리9-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-
+    
     - name: Upload neodgm artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/neodgm-artifact-${{ env.VERSION }}.zip
-        asset_name: neodgm-artifact-${{ env.VERSION }}.zip
+        asset_path: ${{ github.workspace }}/네오둥근모-${{ env.VERSION }}.zip
+        asset_name: 네오둥근모-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
