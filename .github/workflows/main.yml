@@ -95,21 +95,12 @@ jobs:
         cd ${{ secrets.VERSION_FILE_PATH }}/neodgm
         zip -r ../../Neo둥근모-${{ env.VERSION }}.zip .
 
-    - name: Encode filenames
-      run: |
-        ENCODED_DOSSAMMUL=$(python -c "import urllib.parse; print(urllib.parse.quote('도스샘물-${{ env.VERSION }}.zip', safe=''))")
-        ENCODED_GALMURI9=$(python -c "import urllib.parse; print(urllib.parse.quote('갈무리9-${{ env.VERSION }}.zip', safe=''))")
-        ENCODED_NEODGM=$(python -c "import urllib.parse; print(urllib.parse.quote('Neo둥근모-${{ env.VERSION }}.zip', safe=''))")
-        echo "ENCODED_DOSSAMMUL=$ENCODED_DOSSAMMUL" >> $GITHUB_ENV
-        echo "ENCODED_GALMURI9=$ENCODED_GALMURI9" >> $GITHUB_ENV
-        echo "ENCODED_NEODGM=$ENCODED_NEODGM" >> $GITHUB_ENV
-
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/도스샘물-${{ env.VERSION }}.zip
-        asset_name: ${{ env.ENCODED_DOSSAMMUL }}
+        asset_name: 도스샘물-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
@@ -119,7 +110,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/갈무리9-${{ env.VERSION }}.zip
-        asset_name: ${{ env.ENCODED_GALMURI9 }}
+        asset_name: 갈무리9-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
@@ -129,7 +120,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/Neo둥근모-${{ env.VERSION }}.zip
-        asset_name: ${{ env.ENCODED_NEODGM }}
+        asset_name: Neo둥근모-${{ env.VERSION }}.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
