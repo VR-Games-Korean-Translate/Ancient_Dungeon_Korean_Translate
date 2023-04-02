@@ -1,4 +1,4 @@
-name: Fetch Google Sheet Data
+name: Daily Korean Translation 
 
 on:
   workflow_dispatch:
