@@ -82,14 +82,12 @@ jobs:
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        release_name: Release ${{ env.VERSION }}
+        body: ${{ env.DESCRIPTION }}
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-      with:
-        tag_name: v${{ env.VERSION }}
-        release_name: ${{ secrets.VERSION_FILE_PATH }}_v${{ env.VERSION }}
-        body: ${{ env.DESCRIPTION }}
-        draft: false
-        prerelease: false
 
     - name: Upload release assets
       uses: actions/upload-release-asset@v1
