@@ -91,17 +91,20 @@ jobs:
     - name: Compress dossammul directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/dossammul
-        zip -r ../../dossammul-${{ env.VERSION }}.zip .
+        zip -r ../dossammul-${{ env.VERSION }}.zip .
+        cd ..
 
     - name: Compress galmuri9 directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/galmuri9
-        zip -r ../../galmuri9-${{ env.VERSION }}.zip .
+        zip -r ../galmuri9-${{ env.VERSION }}.zip .
+        cd ..
 
     - name: Compress neodgm directory
       run: |
         cd ${{ secrets.VERSION_FILE_PATH }}/neodgm
-        zip -r ../../neodgm-${{ env.VERSION }}.zip .
+        zip -r ../neodgm-${{ env.VERSION }}.zip .
+        cd ..
 
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
