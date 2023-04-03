@@ -37,9 +37,9 @@ jobs:
       id: git-check
       run: |
         if git status --porcelain | grep "^M" &> /dev/null; then
-          echo "::set-output name=changes::true"
+          echo "changes=true" >> $GITHUB_ENV
         else
-          echo "::set-output name=changes::false"
+          echo "changes=false" >> $GITHUB_ENV
         fi
 
     - name: Configure Git
@@ -48,7 +48,7 @@ jobs:
         git config user.email "actions@github.com"
 
     - name: Commit and push changes
-      if: steps.git-check.outputs.changes == 'true'
+      if: env.changes == 'true'
       run: |
         git add .
         git commit -m "Update english.csv"
@@ -77,6 +77,22 @@ jobs:
         body: ${{ env.DESCRIPTION }}
         draft: false
         prerelease: false
+
+    - name: Compress dossammul directory
+      run: |
+        cd ${{ secrets.DOSSAMMUL_DIR }}
+        zip -r ../dossammul-${{ env.VERSION }}.zip .
+        cd ..
+
+    - name: Upload release assets
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dossammul-${{ env.VERSION }}.zip
+        asset_name: dossammul-${{ env.VERSION }}.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
     - name: Compress dossammul directory
       run: |
