@@ -3,58 +3,72 @@ name: Daily Korean Translation Release
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 15 * * *' # 매일 자정에 실행
+    - cron: '0 15 * * *'
 
 jobs:
   fetch_data:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.WORKFLOW_TOKEN }}
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          sudo apt-get install zip
+          python -m pip install --upgrade pip
+          pip install gspread oauth2client
+      - name: Fetch and save data
+        run: python fetch_data.py
+        env:
+          SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          SHEET_URL: ${{ secrets.SHEET_URL }}
+          VERSION_FILE_PATH: ${{ secrets.VERSION_FILE_PATH }}
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+  check_changes:
+    needs: fetch_data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+      - name: Check for changes
+        id: git-check
+        run: |
+          if git status --porcelain | grep "^M" &> /dev/null; then
+            echo "changes=true" >> $GITHUB_ENV
+          else
+            echo "changes=false" >> $GITHUB_ENV
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get install zip
-        python -m pip install --upgrade pip
-        pip install gspread oauth2client
+  commit_push_changes:
+    needs: check_changes
+    runs-on: ubuntu-latest
+    if: needs.check_changes.outputs.changes == 'true'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Update english.csv"
+          git push
 
-    - name: Fetch and save data
-      run: python fetch_data.py
-      env:
-        SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-        SHEET_URL: ${{ secrets.SHEET_URL }}
-        VERSION_FILE_PATH: ${{ secrets.VERSION_FILE_PATH }}
-
-    - name: Check for changes
-      id: git-check
-      run: |
-        if git status --porcelain | grep "^M" &> /dev/null; then
-          echo "changes=true" >> $GITHUB_ENV
-        else
-          echo "changes=false" >> $GITHUB_ENV
-        fi
-
-    - name: Configure Git
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-
-    - name: Commit and push changes
-      if: env.changes == 'true'
-      run: |
-        git add .
-        git commit -m "Update english.csv"
-        git push
-
-    - name: Set version
+  compress_and_upload:
+    needs: commit_push_changes
+    runs-on: ubuntu-latest
+    steps:
+          - name: Set version
       run: echo "VERSION=$(date '+%Y%m%d%H%M')" >> $GITHUB_ENV
       
     - name: Compress dossammul directory
@@ -121,7 +135,12 @@ jobs:
         tag: v${{ env.VERSION }}
         overwrite: true
 
-    - name: Update last success date
+  update_last_success_date:
+    needs: compress_and_upload
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+          - name: Update last success date
       if: success()
       run: |
         echo "LAST_SUCCESS_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
