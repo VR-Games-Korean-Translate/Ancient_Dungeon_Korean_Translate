@@ -135,4 +135,3 @@ jobs:
         git add last_success_date.json
         git commit -m "Update last success date JSON"
         git push
-
