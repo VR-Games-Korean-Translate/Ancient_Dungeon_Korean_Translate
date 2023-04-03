@@ -135,7 +135,7 @@ jobs:
         git add last_success_date.txt
         git commit -m "Update last success date"
         git push
-
+  
     - name: Update last success date JSON
       if: success()
       run: |
