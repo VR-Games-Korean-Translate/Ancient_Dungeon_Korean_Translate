@@ -131,12 +131,11 @@ jobs:
     - name: Commit last success date
       if: success()
       run: |
-        echo "Last successful run: ${{ env.LAST_SUCCESS_DATE }}" > last_success_date.txt
         git add last_success_date.txt
         git commit -m "Update last success date"
         git push
-  
-    - name: Update last success date JSON
+
+    - name: Commit last success date JSON
       if: success()
       run: |
         echo '{"last_successful_run_date": "'"${{ env.LAST_SUCCESS_DATE }}"'"}' > last_success_date.json
