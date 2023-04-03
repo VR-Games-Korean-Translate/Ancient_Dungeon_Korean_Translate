@@ -128,13 +128,6 @@ jobs:
       run: |
         echo "LAST_SUCCESS_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
 
-    - name: Commit last success date
-      if: success()
-      run: |
-        git add last_success_date.txt
-        git commit -m "Update last success date"
-        git push
-
     - name: Commit last success date JSON
       if: success()
       run: |
