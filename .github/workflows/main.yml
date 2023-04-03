@@ -68,91 +68,91 @@ jobs:
     needs: commit_push_changes
     runs-on: ubuntu-latest
     steps:
-          - name: Set version
-      run: echo "VERSION=$(date '+%Y%m%d%H%M')" >> $GITHUB_ENV
-      
-    - name: Compress dossammul directory
-      run: |
-        zip -r ./dossammul-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/dossammul
-
-    - name: Compress galmuri9 directory
-      run: |
-        zip -r ./galmuri9-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/galmuri9
-
-    - name: Compress neodgm directory
-      run: |
-        zip -r ./neodgm-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/neodgm
-
-    - name: Fetch release description
-      id: fetch_description
-      run: |
-        DESCRIPTION="번역률: $(python fetch_description.py)<br><br>원하는 폰트 한가지를 선택해서 사용하세요.<br><br>검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요.<br>---<br>Translation progress: $(python fetch_description.py)<br><br>Choose one font that you want to use.<br><br>If you encounter a black screen error, please overwrite with [this file](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)."
-        echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
-      env:
-        SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-        SHEET_URL: ${{ secrets.SHEET_URL }}
+      - name: Set version
+        run: echo "VERSION=$(date '+%Y%m%d%H%M')" >> $GITHUB_ENV
         
-    - name: Create a new git tag
-      run: git tag v${{ env.VERSION }}
-
-    - name: Push git tag
-      run: git push origin v${{ env.VERSION }}
-      
-    - name: Create release
-      uses: softprops/action-gh-release@v1
-      id: create_release
-      with:
-        tag_name: v${{ env.VERSION }}
-        name: Release ${{ env.VERSION }}
-        body: ${{ env.DESCRIPTION }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-
-    - name: Upload dossammul artifact to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.WORKFLOW_TOKEN }}
-        file: dossammul-${{ env.VERSION }}.zip
-        asset_name: dossammul-${{ env.VERSION }}.zip
-        tag: v${{ env.VERSION }}
-        overwrite: true
-
-    - name: Upload galmuri9 artifact to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.WORKFLOW_TOKEN }}
-        file: galmuri9-${{ env.VERSION }}.zip
-        asset_name: galmuri9-${{ env.VERSION }}.zip
-        tag: v${{ env.VERSION }}
-        overwrite: true
-
-    - name: Upload neodgm artifact to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.WORKFLOW_TOKEN }}
-        file: neodgm-${{ env.VERSION }}.zip
-        asset_name: neodgm-${{ env.VERSION }}.zip
-        tag: v${{ env.VERSION }}
-        overwrite: true
+      - name: Compress dossammul directory
+        run: |
+          zip -r ./dossammul-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/dossammul
+  
+      - name: Compress galmuri9 directory
+        run: |
+          zip -r ./galmuri9-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/galmuri9
+  
+      - name: Compress neodgm directory
+        run: |
+          zip -r ./neodgm-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/neodgm
+  
+      - name: Fetch release description
+        id: fetch_description
+        run: |
+          DESCRIPTION="번역률: $(python fetch_description.py)<br><br>원하는 폰트 한가지를 선택해서 사용하세요.<br><br>검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요.<br>---<br>Translation progress: $(python fetch_description.py)<br><br>Choose one font that you want to use.<br><br>If you encounter a black screen error, please overwrite with [this file](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)."
+          echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
+        env:
+          SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          SHEET_URL: ${{ secrets.SHEET_URL }}
+          
+      - name: Create a new git tag
+        run: git tag v${{ env.VERSION }}
+  
+      - name: Push git tag
+        run: git push origin v${{ env.VERSION }}
+        
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        id: create_release
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          body: ${{ env.DESCRIPTION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+  
+      - name: Upload dossammul artifact to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.WORKFLOW_TOKEN }}
+          file: dossammul-${{ env.VERSION }}.zip
+          asset_name: dossammul-${{ env.VERSION }}.zip
+          tag: v${{ env.VERSION }}
+          overwrite: true
+  
+      - name: Upload galmuri9 artifact to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.WORKFLOW_TOKEN }}
+          file: galmuri9-${{ env.VERSION }}.zip
+          asset_name: galmuri9-${{ env.VERSION }}.zip
+          tag: v${{ env.VERSION }}
+          overwrite: true
+  
+      - name: Upload neodgm artifact to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.WORKFLOW_TOKEN }}
+          file: neodgm-${{ env.VERSION }}.zip
+          asset_name: neodgm-${{ env.VERSION }}.zip
+          tag: v${{ env.VERSION }}
+          overwrite: true
 
   update_last_success_date:
     needs: compress_and_upload
     runs-on: ubuntu-latest
     if: success()
     steps:
-          - name: Update last success date
-      if: success()
-      run: |
-        echo "LAST_SUCCESS_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+      - name: Update last success date
+        if: success()
+        run: |
+          echo "LAST_SUCCESS_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
 
-    - name: Commit last success date JSON
-      if: success()
-      run: |
-        echo '{"last_successful_run_date": "'"${{ env.LAST_SUCCESS_DATE }}"'"}' > last_success_date.json
-        git add last_success_date.json
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "Update last success date JSON"
-          git push
-        fi
+      - name: Commit last success date JSON
+        if: success()
+        run: |
+          echo '{"last_successful_run_date": "'"${{ env.LAST_SUCCESS_DATE }}"'"}' > last_success_date.json
+          git add last_success_date.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update last success date JSON"
+            git push
+          fi
