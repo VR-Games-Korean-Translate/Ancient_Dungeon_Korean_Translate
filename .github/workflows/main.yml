@@ -80,8 +80,8 @@ jobs:
         SHEET_URL: ${{ secrets.SHEET_URL }}
         
     - name: Create release
-      id: create_release
       uses: softprops/action-gh-release@v1
+      id: create_release
       with:
         tag_name: ${{ env.VERSION }}
         name: Release ${{ env.VERSION }}
@@ -90,32 +90,23 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
     - name: Upload dossammul artifact to release
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/dossammul-${{ env.VERSION }}.zip
-        asset_name: dossammul-${{ env.VERSION }}.zip
-        asset_content_type: application/zip
+        files: dossammul-${{ env.VERSION }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-
+    
     - name: Upload galmuri9 artifact to release
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/galmuri9-${{ env.VERSION }}.zip
-        asset_name: galmuri9-${{ env.VERSION }}.zip
-        asset_content_type: application/zip
+        files: galmuri9-${{ env.VERSION }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-
+    
     - name: Upload neodgm artifact to release
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/neodgm-${{ env.VERSION }}.zip
-        asset_name: neodgm-${{ env.VERSION }}.zip
-        asset_content_type: application/zip
+        files: neodgm-${{ env.VERSION }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
