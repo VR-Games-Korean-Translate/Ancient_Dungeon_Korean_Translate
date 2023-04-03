@@ -60,7 +60,7 @@ jobs:
     - name: Fetch release description
       id: fetch_description
       run: |
-        DESCRIPTION="번역률: $(python fetch_description.py)<br><br>원하는 폰트 한가지를 선택해서 사용하세요.<br><br>검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요.--- <br><br>Translation progress: $(python fetch_description.py)<br><br>Choose one font that you want to use.<br><br>If you encounter a black screen error, please overwrite with [this file](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)."
+        DESCRIPTION="번역률: $(python fetch_description.py)<br><br>원하는 폰트 한가지를 선택해서 사용하세요.<br><br>검은 화면의 오류가 난다면, [해당 파일](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)을 같이 덮어 씌워주세요.<br>---<br>Translation progress: $(python fetch_description.py)<br><br>Choose one font that you want to use.<br><br>If you encounter a black screen error, please overwrite with [this file](https://drive.google.com/file/d/11I2H8FL6lf80tPEb8CbydxviFt2ZaG8e/view?usp=sharing)."
         echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
       env:
         SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
