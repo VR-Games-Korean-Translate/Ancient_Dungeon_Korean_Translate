@@ -89,16 +89,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
-    - name: Upload release assets
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dossammul-${{ env.VERSION }}.zip
-        asset_name: dossammul-${{ env.VERSION }}.zip
-        asset_content_type: application/zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-
     - name: Upload dossammul artifact to release
       uses: actions/upload-release-asset@v1
       with:
