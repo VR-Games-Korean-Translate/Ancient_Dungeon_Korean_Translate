@@ -1,2 +1,9 @@
 
 .idea/
+
+__pycache__/
+*.zip
+/dossammul/
+/galmuri9/
+/neodgm/
+key.json
