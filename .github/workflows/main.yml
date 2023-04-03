@@ -43,7 +43,6 @@ jobs:
         fi
 
     - name: Configure Git
-      if: steps.git-check.outputs.changes == 'true'
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
@@ -144,3 +143,4 @@ jobs:
         git add last_success_date.json
         git commit -m "Update last success date JSON"
         git push
+
