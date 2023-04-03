@@ -41,8 +41,8 @@
 
 <br>
 <br>
-<br>
-<br>
+
+---
 
 # Ancient Dungeon Korean Localization Project
 ### Project Participants - Korean VR Gamers
