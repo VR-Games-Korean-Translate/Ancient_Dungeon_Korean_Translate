@@ -61,7 +61,6 @@ jobs:
       run: |
         zip -r ./dossammul-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/dossammul
 
-
     - name: Compress galmuri9 directory
       run: |
         zip -r ./galmuri9-${{ env.VERSION }}.zip ./${{ secrets.VERSION_FILE_PATH }}/galmuri9
@@ -79,11 +78,14 @@ jobs:
         SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
         SHEET_URL: ${{ secrets.SHEET_URL }}
         
+    - name: Create a new git tag
+      run: git tag v${{ env.VERSION }}
+      
     - name: Create release
       uses: softprops/action-gh-release@v1
       id: create_release
       with:
-        tag_name: ${{ env.VERSION }}
+        tag_name: v${{ env.VERSION }}
         name: Release ${{ env.VERSION }}
         body: ${{ env.DESCRIPTION }}
       env:
