@@ -80,6 +80,9 @@ jobs:
         
     - name: Create a new git tag
       run: git tag v${{ env.VERSION }}
+
+    - name: Push git tag
+      run: git push origin v${{ env.VERSION }}
       
     - name: Create release
       uses: softprops/action-gh-release@v1
