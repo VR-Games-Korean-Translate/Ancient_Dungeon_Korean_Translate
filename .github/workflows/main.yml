@@ -95,28 +95,31 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
     - name: Upload dossammul artifact to release
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        files: dossammul-${{ env.VERSION }}.zip
-        release_id: ${{ steps.create_release.outputs.id }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-    
+        repo_token: ${{ secrets.WORKFLOW_TOKEN }}
+        file: dossammul-${{ env.VERSION }}.zip
+        asset_name: dossammul-${{ env.VERSION }}.zip
+        tag: v${{ env.VERSION }}
+        overwrite: true
+
     - name: Upload galmuri9 artifact to release
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        files: galmuri9-${{ env.VERSION }}.zip
-        release_id: ${{ steps.create_release.outputs.id }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-    
+        repo_token: ${{ secrets.WORKFLOW_TOKEN }}
+        file: galmuri9-${{ env.VERSION }}.zip
+        asset_name: galmuri9-${{ env.VERSION }}.zip
+        tag: v${{ env.VERSION }}
+        overwrite: true
+
     - name: Upload neodgm artifact to release
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        files: neodgm-${{ env.VERSION }}.zip
-        release_id: ${{ steps.create_release.outputs.id }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        repo_token: ${{ secrets.WORKFLOW_TOKEN }}
+        file: neodgm-${{ env.VERSION }}.zip
+        asset_name: neodgm-${{ env.VERSION }}.zip
+        tag: v${{ env.VERSION }}
+        overwrite: true
 
     - name: Update last success date
       if: success()
