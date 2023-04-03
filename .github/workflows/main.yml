@@ -133,5 +133,9 @@ jobs:
       run: |
         echo '{"last_successful_run_date": "'"${{ env.LAST_SUCCESS_DATE }}"'"}' > last_success_date.json
         git add last_success_date.json
-        git commit -m "Update last success date JSON"
-        git push
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update last success date JSON"
+          git push
+        fi
